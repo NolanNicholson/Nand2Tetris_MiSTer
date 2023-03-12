@@ -4,7 +4,7 @@
 TOP = --top-module top
 RTL = ../../rtl
 V_SRC = \
-		$(RTL)/01/nand_n2t.v \
+		$(wildcard $(RTL)/01/*.v) \
 		top.v
 
 
@@ -28,11 +28,11 @@ VERILATOR = $(VERILATOR_ROOT)/bin/verilator
 endif
 
 default:
-	@echo "-- VERILATE & BUILD --------"
+	@echo "\n-- VERILATE & BUILD --------\n"
 	$(VERILATOR) -cc --exe --build -j $(TOP) $(V_SRC) sim_main.cpp
-	@echo "\n-- RUN ---------------------"
+	@echo "\n-- RUN ---------------------\n"
 	obj_dir/Vtop
-	@echo "\n-- DONE --------------------"
+	@echo "\n-- DONE --------------------\n"
 
 ######################################################################
 

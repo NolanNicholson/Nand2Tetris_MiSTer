@@ -1,13 +1,10 @@
 // gate names are reserved identifiers in Verilog; hence the "_n2t" suffix
-module nand_n2t
+module not_n2t
 (
-    input a,
-    input b,
+    input in,
     output out
 );
 
-
-assign out = ~(a & b);
-
+// TODO
 
 endmodule
