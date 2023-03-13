@@ -8,6 +8,31 @@ module mux4way16
     output [15:0] out
 );
 
-// TODO
+wire [15:0] muxed_ab;
+wire [15:0] muxed_cd;
+
+mux16 mux_ab
+(
+    .a(a),
+    .b(b),
+    .sel(sel[0]),
+    .out(muxed_ab)
+);
+
+mux16 mux_cd
+(
+    .a(c),
+    .b(d),
+    .sel(sel[0]),
+    .out(muxed_cd)
+);
+
+mux16 mux_abcd
+(
+    .a(muxed_ab),
+    .b(muxed_cd),
+    .sel(sel[1]),
+    .out(out)
+);
 
 endmodule

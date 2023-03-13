@@ -5,6 +5,12 @@ module not_n2t
     output out
 );
 
-// TODO
+// Feed both inputs of a NAND the same signal, and it will function as a NOT.
+nand_n2t nand01
+(
+    .a(in),
+    .b(in),
+    .out(out)
+);
 
 endmodule

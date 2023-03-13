@@ -6,6 +6,20 @@ module and_n2t
     output out
 );
 
-// TODO
+wire notout;
+
+// AND is NOT NAND
+nand_n2t nand0
+(
+    .a(a),
+    .b(b),
+    .out(notout)
+);
+
+not_n2t not0
+(
+    .in(notout),
+    .out(out)
+);
 
 endmodule
