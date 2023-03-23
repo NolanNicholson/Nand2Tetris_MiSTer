@@ -88,6 +88,4 @@ HackALU alu
     .ng(out_ng)
 );
 
-assign out_foo = (in_foo[3:0] == 4'b1xx1);
-
 endmodule
