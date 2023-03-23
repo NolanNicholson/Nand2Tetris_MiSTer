@@ -4,6 +4,7 @@
 TOP = --top-module top
 RTL = ../../rtl
 V_SRC = \
+		$(wildcard $(RTL)/01/*.v) \
 		$(wildcard $(RTL)/03/*.v) \
 		top.v
 
