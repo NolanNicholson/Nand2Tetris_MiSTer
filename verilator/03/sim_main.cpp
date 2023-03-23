@@ -249,6 +249,60 @@ int main(int argc, char** argv, char** env) {
     run_RAM_tests("cmp/RAM4K.cmp", RAM4K, top, contextp);
     run_RAM_tests("cmp/RAM16K.cmp", RAM16K, top, contextp);
 
+    // Counter
+    /*
+    | time |   in   |reset|load | inc |  out   |
+    | 0+   |      0 |  0  |  0  |  0  |      0 |
+    | 1    |      0 |  0  |  0  |  0  |      0 |
+    */
+    cmp_file.open("cmp/PC.cmp");
+    top->clk = 1;
+    if (cmp_file.is_open())
+    {
+        getline(cmp_file, line); // discard first line
+        while(getline(cmp_file, line))
+        {
+            line_ss.str(line);
+            getline(line_ss, token, '|'); // discard initial delimiter
+
+            getline(line_ss, token, '|'); // get time, and update if needed
+            if (token.compare(time) != 0)
+            {
+                contextp->timeInc(1);
+                top->clk = !top->clk;
+                time = token;
+            }
+
+            getline(line_ss, token, '|'); // get IN
+            top->in16 = std::stoi(token, nullptr);
+
+            getline(line_ss, token, '|'); // get RESET
+            top->reset_pc = std::stoi(token, nullptr);
+
+            getline(line_ss, token, '|'); // get LOAD
+            top->load_pc = std::stoi(token, nullptr);
+
+            getline(line_ss, token, '|'); // get INC
+            top->inc_pc = std::stoi(token, nullptr);
+
+            // all inputs received
+            top->eval();
+
+            getline(line_ss, token, '|'); // get OUT
+            expected = std::stoi(token, nullptr);
+
+            sprintf(test_desc, "PC @ time = %s / %ld", time.c_str(), contextp->time());
+            assert_equal(top->out16_pc, expected, test_desc);
+        }
+
+        cmp_file.close();
+    }
+    else
+    {
+        std::cerr << "Error: CMP file not found" << std::endl;
+    }
+
+
     VL_PRINTF("Test results: %d pass, %d fail\n", num_pass, num_fail);
 
     top->final();

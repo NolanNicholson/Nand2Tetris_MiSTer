@@ -19,6 +19,10 @@ module top
     input load_RAM4K,
     input load_RAM16K,
 
+    input reset_pc,
+    input load_pc,
+    input inc_pc,
+
     input [15:0] in16,
     input [15:0] address,
 
@@ -28,7 +32,8 @@ module top
     output [15:0] out16_RAM64,
     output [15:0] out16_RAM512,
     output [15:0] out16_RAM4K,
-    output [15:0] out16_RAM16K
+    output [15:0] out16_RAM16K,
+    output [15:0] out16_pc
 );
 
 Bit test_bit
@@ -90,6 +95,16 @@ RAM16K test_RAM16K
     .address(address[13:0]),
     .load(load_RAM16K),
     .out(out16_RAM16K)
+);
+
+PC test_PC
+(
+    .clk(clk),
+    .in(in16),
+    .load(load_pc),
+    .inc(inc_pc),
+    .reset(reset_pc),
+    .out(out16_pc)
 );
 
 
