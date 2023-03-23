@@ -2,8 +2,13 @@ module HalfAdder
 (
     input a,
     input b,
+
     output sum,
+    /* verilator lint_off UNOPTFLAT */
+    // Reason: this will otherwise complain when trying to pass
+    // through a bus of carry signals - e.g., carry[0] in, carry[1] out
     output carry
+    /* verilator lint_on UNOPTFLAT */
 );
 
 // The strict spirit of Nand to Tetris would be to use the gates

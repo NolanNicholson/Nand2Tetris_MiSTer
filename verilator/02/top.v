@@ -12,6 +12,9 @@ module top
     input in_b,
     input in_c,
 
+    input [7:0] in_foo,
+    output out_foo,
+
     input [15:0] in16_a,
     input [15:0] in16_b,
 
@@ -84,5 +87,7 @@ HackALU alu
     .zr(out_zr),
     .ng(out_ng)
 );
+
+assign out_foo = (in_foo[3:0] == 4'b1xx1);
 
 endmodule
