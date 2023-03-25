@@ -18,6 +18,18 @@ module Computer
 );
 
 
+ROM32K prog_mem
+(
+    // TODO
+    .address(),
+    .out(),
+
+    .clk(clk),
+    .ioctl_addr(ioctl_addr),
+    .ioctl_din(ioctl_din),
+    .ioctl_wr(ioctl_wr)
+);
+
 Memory memory
 (
     .clk(clk),

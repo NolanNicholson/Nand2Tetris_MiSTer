@@ -55,6 +55,7 @@ CC_OPT = -O
 V_SRC = \
 	sim_top.v \
 	$(RTL)/05/Computer.v \
+	$(RTL)/05/ROM32K.v \
 	$(RTL)/05/Memory.v \
 	$(RTL)/05/Screen.v \
 	$(RTL)/05/CPU.v

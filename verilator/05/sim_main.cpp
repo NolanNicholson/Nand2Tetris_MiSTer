@@ -254,7 +254,7 @@ int main(int argc, char** argv, char** env) {
 	// Setup video output
 	if (video.Initialise(windowTitle) == 1) { return 1; }
 
-	bus.QueueDownload("./test.bin", 0, true);
+	bus.QueueDownload("./programs/Add.hack.bin", 0, true);
 
 
 #ifdef WIN32
@@ -314,9 +314,9 @@ int main(int argc, char** argv, char** env) {
 		ImGui::SetWindowPos(windowTitle_DebugLog, ImVec2(0, 160), ImGuiCond_Once);
 
 		// Memory debug
-		//ImGui::Begin("PGROM Editor");
-		//mem_edit.DrawContents(top->top__DOT__uut__DOT__rom__DOT__mem, 32768, 0);
-		//ImGui::End();
+		ImGui::Begin("PGROM Editor");
+		mem_edit.DrawContents(&top->rootp->top__DOT__computer__DOT__prog_mem__DOT__ROM, 32768, 0);
+		ImGui::End();
 
 		// Trace/VCD window
 		ImGui::Begin(windowTitle_Trace);

@@ -59,7 +59,7 @@ Computer computer
     .video_vsync(VGA_VS),
 
     .ioctl_addr(ioctl_addr[15:0]),
-    .ioctl_din(ioctl_din),
+    .ioctl_din(ioctl_dout),
     .ioctl_wr(ioctl_wr)
 );
 
