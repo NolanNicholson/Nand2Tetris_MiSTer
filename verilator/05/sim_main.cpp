@@ -310,7 +310,7 @@ int main(int argc, char** argv, char** env) {
 		ImGui::End();
 
 		// Debug log window
-		console.Draw(windowTitle_DebugLog, &showDebugLog, ImVec2(500, 700));
+		console.Draw(windowTitle_DebugLog, &showDebugLog, ImVec2(500, 400));
 		ImGui::SetWindowPos(windowTitle_DebugLog, ImVec2(0, 160), ImGuiCond_Once);
 
 		// Memory debug
@@ -320,7 +320,7 @@ int main(int argc, char** argv, char** env) {
 
 		// Trace/VCD window
 		ImGui::Begin(windowTitle_Trace);
-		ImGui::SetWindowPos(windowTitle_Trace, ImVec2(0, 870), ImGuiCond_Once);
+		ImGui::SetWindowPos(windowTitle_Trace, ImVec2(0, 550), ImGuiCond_Once);
 		ImGui::SetWindowSize(windowTitle_Trace, ImVec2(500, 150), ImGuiCond_Once);
 
 		if (ImGui::Button("Start VCD Export")) { Trace = 1; } ImGui::SameLine();
