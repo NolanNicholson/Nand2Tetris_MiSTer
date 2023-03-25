@@ -71,7 +71,7 @@ Inc16 i16
     .out(out16_inc)
 );
 
-HackALU alu
+ALU alu
 (
     .x(in16_x),
     .y(in16_y),
