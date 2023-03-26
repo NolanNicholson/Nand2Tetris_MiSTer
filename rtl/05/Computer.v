@@ -18,11 +18,31 @@ module Computer
 );
 
 
+wire [15:0] cpu_instruction;
+wire [15:0] cpu_inM /*verilator public_flat*/;
+wire [15:0] cpu_outM /*verilator public_flat*/;
+wire [14:0] cpu_addressM /*verilator public_flat*/;
+wire cpu_writeM /*verilator public_flat*/;
+wire [14:0] cpu_pc;
+
+CPU cpu
+(
+    .clk(clk),
+
+    .instruction(cpu_instruction),
+    .inM(cpu_inM),
+    .reset(reset),
+
+    .outM(cpu_outM),
+    .addressM(cpu_addressM),
+    .writeM(cpu_writeM),
+    .pc(cpu_pc)
+);
+
 ROM32K prog_mem
 (
-    // TODO
-    .address(),
-    .out(),
+    .address(cpu_pc),
+    .out(cpu_instruction),
 
     .clk(clk),
     .ioctl_addr(ioctl_addr),
@@ -35,33 +55,15 @@ Memory memory
     .clk(clk),
     .reset(reset),
 
-    // TODO
-    .in(),
-    .address(),
-    .load(),
+    .in(cpu_outM),
+    .address(cpu_addressM),
+    .load(cpu_writeM),
 
-    // TODO
-    .out(),
+    .out(cpu_inM),
 
     .video_color(video_color),
     .video_hsync(video_hsync),
     .video_vsync(video_vsync)
-);
-
-CPU cpu
-(
-    .clk(clk),
-
-    // TODO
-    .instruction(),
-    .inM(),
-    .reset(reset),
-
-    // TODO
-    .outM(),
-    .addressM(),
-    .writeM(),
-    .pc()
 );
 
 

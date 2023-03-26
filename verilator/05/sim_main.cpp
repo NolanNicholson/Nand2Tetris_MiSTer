@@ -31,7 +31,7 @@ using namespace std;
 // Simulation control
 // ------------------
 int initialReset = 48;
-bool run_enable = 1;
+bool run_enable = 0;
 int batchSize = 150000;
 bool single_step = 0;
 bool multi_step = 0;
@@ -47,7 +47,8 @@ const char* windowTitle_Trace = "Trace/VCD control";
 const char* windowTitle_Audio = "Audio output";
 bool showDebugLog = true;
 DebugConsole console;
-MemoryEditor mem_edit;
+MemoryEditor mem_edit_rom;
+MemoryEditor mem_edit_ram;
 
 // HPS emulator
 // ------------
@@ -254,7 +255,7 @@ int main(int argc, char** argv, char** env) {
 	// Setup video output
 	if (video.Initialise(windowTitle) == 1) { return 1; }
 
-	bus.QueueDownload("./programs/Add.hack.bin", 0, true);
+	bus.QueueDownload("./programs/Max.hack.bin", 0, true);
 
 
 #ifdef WIN32
@@ -313,9 +314,26 @@ int main(int argc, char** argv, char** env) {
 		console.Draw(windowTitle_DebugLog, &showDebugLog, ImVec2(500, 400));
 		ImGui::SetWindowPos(windowTitle_DebugLog, ImVec2(0, 160), ImGuiCond_Once);
 
+        // CPU debug
+        ImGui::Begin("CPU Debug");
+		ImGui::Text("Reset: %d\nInstruction: %x\naddressM: %x\ninM: %x\noutM: %x\nwriteM: %d\nPC: %x\nA: %x\nD: %x",
+                top->rootp->top__DOT__reset,
+                top->rootp->top__DOT__computer__DOT__cpu_instruction,
+                top->rootp->top__DOT__computer__DOT__cpu_addressM,
+                top->rootp->top__DOT__computer__DOT__cpu_inM,
+                top->rootp->top__DOT__computer__DOT__cpu_outM,
+                top->rootp->top__DOT__computer__DOT__cpu_writeM,
+                top->rootp->top__DOT__computer__DOT__cpu__DOT__PC_reg,
+                top->rootp->top__DOT__computer__DOT__cpu__DOT__A,
+                top->rootp->top__DOT__computer__DOT__cpu__DOT__D);
+        ImGui::End();
+
 		// Memory debug
 		ImGui::Begin("PGROM Editor");
-		mem_edit.DrawContents(&top->rootp->top__DOT__computer__DOT__prog_mem__DOT__ROM, 32768, 0);
+		mem_edit_rom.DrawContents(&top->rootp->top__DOT__computer__DOT__prog_mem__DOT__ROM, 0x8000, 0);
+		ImGui::End();
+		ImGui::Begin("RAM Editor");
+		mem_edit_ram.DrawContents(&top->rootp->top__DOT__computer__DOT__memory__DOT__ram__DOT__RAM, 0x4000, 0);
 		ImGui::End();
 
 		// Trace/VCD window

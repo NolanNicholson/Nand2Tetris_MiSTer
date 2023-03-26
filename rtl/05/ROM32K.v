@@ -15,9 +15,9 @@ assign out = ROM[address];
 always @(posedge clk) begin
     if (ioctl_wr) begin
         if (ioctl_addr[0]) begin
-            ROM[ioctl_addr[15:1]] [15:8] <= ioctl_din;
-        end else begin
             ROM[ioctl_addr[15:1]] [7:0] <= ioctl_din;
+        end else begin
+            ROM[ioctl_addr[15:1]] [15:8] <= ioctl_din;
         end
     end
 end
