@@ -30,7 +30,7 @@ using namespace std;
 
 // Simulation control
 // ------------------
-int initialReset = 48;
+int initialReset = 512;
 bool run_enable = 0;
 int batchSize = 150000;
 bool single_step = 0;
@@ -255,7 +255,7 @@ int main(int argc, char** argv, char** env) {
 	// Setup video output
 	if (video.Initialise(windowTitle) == 1) { return 1; }
 
-	bus.QueueDownload("./programs/Max.hack.bin", 0, true);
+	bus.QueueDownload("./programs/Rect.hack.bin", 0, true);
 
 
 #ifdef WIN32
