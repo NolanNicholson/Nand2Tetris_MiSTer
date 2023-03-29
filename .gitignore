@@ -2,4 +2,8 @@
 **/logs/
 **/obj_dir/
 **/imgui.ini
+
+# Other stuff
+**/__pycache__/
 ignore/
+software/**/test/
