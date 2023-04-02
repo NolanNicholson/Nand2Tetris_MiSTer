@@ -15,12 +15,14 @@ def translateVM(filename):
         filename_noext = filename[:-3]
         filename_output = filename_noext + ".asm"
 
-    f = open(filename, "r")
+    f_in = open(filename, "r")
+    f_out = open(filename_output, "w")
     cw = CodeWriter(filename_noext)
 
-    for line in f:
+    for line in f_in:
         # Strip whitespace 
         line = line.strip()
+        f_out.write("// " + line + "\n")
 
         # Strip comments
         if "//" in line:
@@ -31,7 +33,6 @@ def translateVM(filename):
         if len(words) == 0:
             continue
 
-        print(words)
         command = words[0]
         arg1 = words[1] if len(words) > 1 else None
         arg2 = words[2] if len(words) > 2 else None
@@ -44,9 +45,13 @@ def translateVM(filename):
             command_asm = cw.writeArithmetic(command)
 
         for asm_line in command_asm:
-            print("  " + asm_line)
+            f_out.write(asm_line + "\n")
 
-    f.close()
+    for asm_line in cw.writeFileEnd():
+        f_out.write(asm_line + "\n")
+
+    f_out.close()
+    f_in.close()
 
 
 if len(sys.argv) < 2:

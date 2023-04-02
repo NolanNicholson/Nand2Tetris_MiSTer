@@ -13,13 +13,22 @@ segmentCodes = {
 
 class CodeWriter:
     filename = "Foo"
+    staticname = "Foo"
     gt_index = 0
     lt_index = 0
     eq_index = 0
 
 
     def __init__(self, filename):
+
         self.filename = filename
+
+        # Filename will be a full path, so just get
+        # the last part (without the slash) for static assignments.
+        if "/" in filename:
+            self.staticname = filename[filename.rindex("/")+1:]
+        else:
+            self.staticname = filename
 
 
     """
@@ -53,9 +62,11 @@ class CodeWriter:
     For constant, use A instead of M.
     """
     def addressSegment(self, segment, i):
+        i = int(i)
+
         if segment in segmentCodes:
             SEG = segmentCodes[segment]
-            return addressSEG(SEG, i)
+            return self.addressSEG(SEG, i)
 
         elif segment == "pointer":
             # pointer 0 maps directly to THIS; 1 to THAT
@@ -69,7 +80,7 @@ class CodeWriter:
             return [f"@{i}"]
 
         elif segment == "static":
-            return [f"@{self.filename}.{i}"]
+            return [f"@{self.staticname}.{i}"]
 
 
     """
@@ -123,7 +134,7 @@ class CodeWriter:
     """
     def writePop(self, segment, i):
         # Pop value from the stack and put it in R15
-        routine = popD()
+        routine = self.popD()
         routine += [
                 "@R15",
                 "M=D"
@@ -205,7 +216,7 @@ class CodeWriter:
 
                     # If true
                     f"({if_true})",
-                    "D=1",
+                    "D=-1",
 
                     # Afterward
                     f"({afterward})"
